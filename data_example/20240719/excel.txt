@@ -1,0 +1,63 @@
+excel 的B欄都不用塞到database
+
+StockList (5).xls (上市基本面)
+StockList (9).xls (上櫃基本面)
+
+Table : s_stock_daily_txns
+
+欄位:
+
+stock_no, deal_price, diff_price, diff_rate, open_price, high_price, low_price, amplitude_rate, txn_qty, txn_amount, 
+per, financing_diff, lending_sell_diff, lending_sell_bal, latest_season_rev_yoy, latest_season_gpm_yoy, latest_month_rev_yoy, latest_season_acc_eps, latest_4q_eps, latest_year_eps, 
+cash_dividend, stock_dividend, ly_cash_dividend, ly_stock_dividend, ii_cont_remark, day_trade_qty, day_trade_rate
+
+
+StockList (6).xls (上市技術面)
+StockList (10).xls (上櫃技術面)
+
+Table : s_stock_tech_txns
+
+欄位:
+
+stock_no, deal_price, diff_price, diff_rate, txn_qty, txn_amount, per, ma5, ma10, ma20, 
+ma60, rsi6_d, rsi12_d, rsi6_w, rsi12_w, k_d, d_d, k_w, d_w, k_m, 
+d_m, bias_5, bias_10, bias_20, bias_60, osc_d, osc_w, osc_m, osc_s
+
+StockList (7).xls (上市投信籌碼面)
+StockList (11).xls (上櫃投信籌碼面)
+
+Table : s_stock_chip_txns
+
+欄位:
+
+stock_no, buy_qty, sell_qty, diff_qty, buy_amount, sell_amount, diff_amount, buy_ttl_rate, sell_ttl_rate, diff_ttl_rate, 
+buy_rate, sell_rate, diff_rate, cont_day, cont_qty, cont_remark, cont_rate, cont_ttl_rate
+
+
+begin
+  update s_stock_chip_txns t
+     set t.datecode = '20240718'/*to_char(sysdate,'rrrrmmdd')*/, t.data_type = decode(t.hold_qty, null, '投信', '外資')--t.data_type = '外資'--'投信'--
+   where t.datecode is null;
+  commit;
+end;
+
+
+
+StockList (8).xls (上市外資籌碼面)
+StockList (12).xls (上櫃外資籌碼面)
+
+Table : s_stock_chip_txns
+
+
+欄位:
+
+stock_no, buy_qty, sell_qty, diff_qty, buy_amount, sell_amount, diff_amount, buy_ttl_rate, sell_ttl_rate, diff_ttl_rate, 
+buy_rate, sell_rate, diff_rate, cont_day, cont_qty, cont_remark, cont_rate, cont_ttl_rate, hold_qty, hold_rate
+
+
+begin
+  update s_stock_chip_txns t
+     set t.datecode = '20240718'/*to_char(sysdate,'rrrrmmdd')*/, t.data_type = decode(t.hold_qty, null, '投信', '外資')--t.data_type = '外資'--'投信'--
+   where t.datecode is null;
+  commit;
+end;
